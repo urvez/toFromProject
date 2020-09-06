@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>index</title>
+	<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+	 <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    
+	<script type="text/javascript">
+		firebase.initializeApp({
+  apiKey: "AIzaSyBg9hdebwjuevD4o6A0miRIpa9C13rowUc",
+  authDomain: "tofromproject.firebaseapp.com",
+  databaseURL: "https://tofromproject.firebaseio.com",
+  projectId: "tofromproject",
+  storageBucket: "tofromproject.appspot.com",
+  messagingSenderId: "276345084035",
+  appId: "1:276345084035:web:1bdf072092ef7cda9f23b6",
+  measurementId: "G-K45VKN34F8"
+});
+	var db = firebase.firestore();
+
+	</script>
+</head>
+<body>
+
+	from:<select id="from">
+		<option selected="true" disabled="true">select</option>
+		<option>indore</option>
+		<option>mumbai</option>
+	</select>
+	to : <select id="to">
+		<option selected="true" disabled="true">select</option>
+		<option>ahmedabad</option>
+		<option>delhi</option>
+	</select>
+	<input type="button" name="select" id="search" onclick="myFunc()">
+
+<script type="text/javascript">
+	function myFunc() {
+		// body...
+		var from = document.getElementById('from').value;
+		var to = document.getElementById('to').value;
+		console.log(from +" "+ to);
+
+		db.collection("buses").where("from", "==", from).where("to" , "==" , to)
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    })
+
+	}
+</script>
+</body>
+</html>
